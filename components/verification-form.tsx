@@ -20,11 +20,9 @@ export default function VerificationForm() {
   const [timer, setTimer] = useState(30)
 
   useEffect(() => {
-    // Get email from localStorage
     const userEmail = localStorage.getItem("userEmail")
     setEmail(userEmail)
 
-    // Countdown timer for resend code
     const interval = setInterval(() => {
       setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0))
     }, 1000)
@@ -37,22 +35,19 @@ export default function VerificationForm() {
     setIsLoading(true)
     setError("")
 
-    // Simulate code validation
     if (!code) {
-      setError("Please enter the verification code")
+      setError("Va rog introduce codul de verificare")
       setIsLoading(false)
       return
     }
 
-    // For demo purposes, any 6-digit code is considered valid
     if (code.length !== 6) {
-      setError("Verification code must be 6 digits")
+      setError("Codul de verificare trebuie sa fie de 6 cifre")
       setIsLoading(false)
       return
     }
 
     setTimeout(() => {
-      // Set authenticated in localStorage
       localStorage.setItem("isAuthenticated", "true")
       localStorage.removeItem("loginAttempted")
 
@@ -63,14 +58,13 @@ export default function VerificationForm() {
 
   const handleResendCode = () => {
     setTimer(30)
-    // In a real app, this would trigger an API call to resend the code
   }
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Two-Factor Authentication</CardTitle>
-        <CardDescription>Enter the verification code sent to {email || "your email"}</CardDescription>
+        <CardDescription>Introduceti codul de verificare trimis la {email || "your email"}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -81,7 +75,7 @@ export default function VerificationForm() {
             </Alert>
           )}
           <div className="space-y-2">
-            <Label htmlFor="code">Verification Code</Label>
+            <Label htmlFor="code">Cod de verificare</Label>
             <Input
               id="code"
               type="text"
