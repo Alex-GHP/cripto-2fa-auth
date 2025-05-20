@@ -24,14 +24,14 @@ export const comparePasswords = async (
 export const generateToken = (user: { id: number; email: string }): string => {
     return jwt.sign(
         { id: user.id, email: user.email },
-        JWT_SECRET,
+        JWT_SECRET || '',
         { expiresIn: JWT_EXPIRES_IN }
     );
 };
 
 export const verifyToken = (token: string) => {
     try {
-        return jwt.verify(token, JWT_SECRET) as { id: number; email: string };
+        return jwt.verify(token, JWT_SECRET || '') as { id: number; email: string };
     } catch (error) {
         return null;
     }
